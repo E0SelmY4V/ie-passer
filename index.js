@@ -36,14 +36,7 @@ function iePasser(_path, _test, _conf = null) {
 		fs.writeFile(
 			outPath,
 			`<script type="text/javascript">
-			(${(function (path) {
-				for (var i = 0; i < path.length; i++) {
-					var a = document.createElement('script');
-					a.type = 'text/javascript';
-					a.src = path[i];
-					document.appendChild(a);
-				}
-			}).toString()})(${JSON.stringify(path)})
+				document.getElementsByTagName('script')[0].__reqjs(${JSON.stringify(path)})
 			</script>
 			<pre style="display: none;">
 				(function(){
