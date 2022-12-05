@@ -3,7 +3,7 @@ const { transform } = require('@babel/core/lib/index');
 const { spawn } = require('child_process');
 const { join } = require('path');
 
-function Conf (n) {
+function Conf(n) {
 	for (const i in n) this[i] = n[i];
 }
 Conf.prototype = iePasser.defConf = {
@@ -14,7 +14,9 @@ Conf.prototype = iePasser.defConf = {
 	version: '5',
 };
 
-function iePasser(path, test, _conf = null) {
+function iePasser(_path, _test, _conf = null) {
+	const path = Array.isArray(_path) ? _path : [_path];
+	const test = Array.isArray(_test) ? _test : [_test];
 	const conf = new Conf(_conf);
 	const outPath = join(__dirname, 'res', `${conf.out}.hta`);
 	new Promise((res, rej) => fs.writeFile(
@@ -34,14 +36,21 @@ function iePasser(path, test, _conf = null) {
 		fs.writeFile(
 			outPath,
 			`<script type="text/javascript">
-				(${(function (path) {
-				var a = document.createElement('script');
-				a.type = 'text/javascript';
-				a.src = path;
-				document.appendChild(a);
+			(${(function (path) {
+				for (var i = 0; i < path.length; i++) {
+					var a = document.createElement('script');
+					a.type = 'text/javascript';
+					a.src = path[i];
+					document.appendChild(a);
+				}
 			}).toString()})(${JSON.stringify(path)})
 			</script>
-			<pre>(function(){${result.code}\nreturn k})()</pre>`,
+			<pre style="display: none;">
+				(function(){
+					${result.code}
+					return k
+				})()
+			</pre>`,
 			{ flag: 'a' },
 			(err) => err ? rej(err) : res()
 		)
