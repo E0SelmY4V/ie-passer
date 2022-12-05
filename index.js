@@ -6,19 +6,23 @@ const { join } = require('path');
 iePasser.defConf = {
 	opts: {
 		"presets": ["@babel/preset-env"],
-		// "targets":{"ie":"11"}
 	},
 	out: 'out',
+	version: '5',
 };
 
 function iePasser(path, test, conf = iePasser.defConf) {
 	const outPath = join(__dirname, 'res', `${conf.out}.hta`);
-	return new Promise((res, rej) => fs
+	new Promise((res, rej) => fs.writeFile(
+		outPath,
+		`<meta http-equiv="X-UA-Compatible" content="IE=${conf.version}">`,
+		(err) => err ? rej(err) : res()
+	)).then(() => new Promise((res, rej) => fs
 		.createReadStream('res/frame.html')
 		.pipe(fs.createWriteStream(outPath))
 		.on('close', res)
 		.on('error', rej)
-	).then(() => new Promise((res, rej) => {
+	)).then(() => new Promise((res, rej) => {
 		let code = '';
 		for (const i in test) code += `"i":${test[i].toString()},`;
 		transform(`var k={${code}}`, conf.opts, (err, result) => err ? rej(err) : res(result));

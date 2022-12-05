@@ -4,6 +4,7 @@ export namespace iePasser {
 	declare type Conf = {
 		opts: TransformOptions,
 		out: string,
+		version: '5' | '7' | '8' | '9' | '10' | '11' | 'edge',
 	}
 	export let defConf: Conf
 }
