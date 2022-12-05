@@ -24,7 +24,14 @@ function iePasser(path, test, conf = iePasser.defConf) {
 		transform(`var k={${code}}`, conf.opts, (err, result) => err ? rej(err) : res(result));
 	})).then(result => new Promise((res, rej) =>
 		fs.writeFile(outPath, `
-		<script type="test/javascript" src="${path}"></script>
+		<script type="text/javascript">
+			(${(function (path) {
+				var a = document.createElement('script');
+				a.type = 'text/javascript';
+				a.src = path;
+				document.appendChild(a);
+			}).toString()})(${JSON.stringify(path)})
+		</script>
 		<pre>(function(){${result.code}\nreturn k})()</pre>
 	`, { flag: 'a' }, (err) => err ? rej(err) : res())
 	)).then(() =>
