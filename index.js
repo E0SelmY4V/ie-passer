@@ -23,17 +23,20 @@ function iePasser(path, test, conf = iePasser.defConf) {
 		for (const i in test) code += `"i":${test[i].toString()},`;
 		transform(`var k={${code}}`, conf.opts, (err, result) => err ? rej(err) : res(result));
 	})).then(result => new Promise((res, rej) =>
-		fs.writeFile(outPath, `
-		<script type="text/javascript">
-			(${(function (path) {
+		fs.writeFile(
+			outPath,
+			`<script type="text/javascript">
+				(${(function (path) {
 				var a = document.createElement('script');
 				a.type = 'text/javascript';
 				a.src = path;
 				document.appendChild(a);
 			}).toString()})(${JSON.stringify(path)})
-		</script>
-		<pre>(function(){${result.code}\nreturn k})()</pre>
-	`, { flag: 'a' }, (err) => err ? rej(err) : res())
+			</script>
+			<pre>(function(){${result.code}\nreturn k})()</pre>`,
+			{ flag: 'a' },
+			(err) => err ? rej(err) : res()
+		)
 	)).then(() =>
 		spawn('mshta', [outPath])
 	);
