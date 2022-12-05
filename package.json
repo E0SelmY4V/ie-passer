@@ -1,0 +1,30 @@
+{
+	"name": "ie-passer",
+	"version": "0.9.0",
+	"description": "A debugger based on HTA, which can test your code in IE browser",
+	"main": "index.js",
+	"scripts": {},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/E0SelmY4V/ie-passer.git"
+	},
+	"keywords": [
+		"ie",
+		"debug",
+		"test",
+		"tdd"
+	],
+	"author": "e0selmy4v",
+	"license": "GPL-3.0-or-later",
+	"bugs": {
+		"url": "https://github.com/E0SelmY4V/ie-passer/issues"
+	},
+	"homepage": "https://github.com/E0SelmY4V/ie-passer#readme",
+	"dependencies": {
+		"@babel/core": "^7.20.5",
+		"@babel/preset-env": "^7.20.2"
+	},
+	"os": [
+		"win32"
+	]
+}
