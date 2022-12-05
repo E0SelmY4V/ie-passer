@@ -6,7 +6,7 @@ onload = function () {
 		var n = document.createElement('button');
 		n.innerHTML = i;
 		n.onclick = o[i];
-		d.appendChild(n)
+		d.appendChild(n);
 	}
 };
 document.getElementsByTagName('script')[0].__reqjs = function (path) {

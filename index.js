@@ -16,7 +16,7 @@ Conf.prototype = iePasser.defConf = {
 
 function iePasser(_path, _test, _conf = null) {
 	const path = Array.isArray(_path) ? _path : [_path];
-	const test = Array.isArray(_test) ? _test : [_test];
+	const test = typeof _test === 'object' ? _test : {test: _test};
 	const conf = new Conf(_conf);
 	const outPath = join(__dirname, 'res', `${conf.out}.hta`);
 	new Promise((res, rej) => fs.writeFile(
@@ -30,7 +30,7 @@ function iePasser(_path, _test, _conf = null) {
 		.on('error', rej)
 	)).then(() => new Promise((res, rej) => {
 		let code = '';
-		for (const i in test) code += `"i":${test[i].toString()},`;
+		for (const i in test) code += `"${i}":${test[i].toString()},`;
 		transform(`var k={${code}}`, conf.opts, (err, result) => err ? rej(err) : res(result));
 	})).then(result => new Promise((res, rej) =>
 		fs.writeFile(
