@@ -24,7 +24,7 @@ function iePasser(_path, _test, _conf = null) {
 		`<meta http-equiv="X-UA-Compatible" content="IE=${conf.version}">`,
 		(err) => err ? rej(err) : res()
 	)).then(() => new Promise((res, rej) => fs
-		.createReadStream('res/frame.html')
+		.createReadStream(join(__dirname, 'res/frame.html'))
 		.pipe(fs.createWriteStream(outPath))
 		.on('close', res)
 		.on('error', rej)
