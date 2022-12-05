@@ -1,17 +1,4 @@
 <meta charset="UTF-8">
 <title>Tests on IE</title>
-<script type="text/javascript">
-	test = [function () { alert(123) }]
-	onload = function () {
-		var d = document.getElementsByTagName('div')[0],
-			c = document.getElementsByTagName('pre')[0].innerHTML,
-			o = eval(c);
-		for (var i in o) {
-			var n = document.createElement('button');
-			n.innerHTML = i;
-			n.onclick = o[i];
-			d.appendChild(n)
-		}
-	}
-</script>
+<script type="text/javascript" src="init.js"></script>
 <div></div>

@@ -9,8 +9,8 @@ export namespace iePasser {
 	export let defConf: Conf
 }
 export function iePasser(
-	path: string,
-	test: { [testName: number | string]: () => void },
+	path: string | string[],
+	test: { [testName: number | string]: () => void } | (() => void),
 	conf?: iePasser.Conf,
 ): Promise<ChildProcessWithoutNullStreams>
 export default iePasser
