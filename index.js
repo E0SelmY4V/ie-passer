@@ -3,7 +3,7 @@ const { transform } = require('@babel/core/lib/index');
 const { spawn } = require('child_process');
 const { join } = require('path');
 
-this.defConf = {
+iePasser.defConf = {
 	opts: {
 		"presets": ["@babel/preset-env"],
 		// "targets":{"ie":"11"}
@@ -11,7 +11,7 @@ this.defConf = {
 	out: 'out',
 };
 
-this['default'] = this.iePasser = (path, test, conf = this.defConf) => {
+function iePasser(path, test, conf = iePasser.defConf) {
 	const outPath = join(__dirname, 'res', `${conf.out}.hta`);
 	return new Promise((res, rej) => fs
 		.createReadStream('res/frame.html')
@@ -31,3 +31,5 @@ this['default'] = this.iePasser = (path, test, conf = this.defConf) => {
 		spawn('mshta', [outPath])
 	);
 }
+
+this['default'] = this.iePasser = iePasser;
