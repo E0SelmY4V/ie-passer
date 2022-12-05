@@ -41,7 +41,12 @@ function iePasser(path, test, _conf = null) {
 				document.appendChild(a);
 			}).toString()})(${JSON.stringify(path)})
 			</script>
-			<pre>(function(){${result.code}\nreturn k})()</pre>`,
+			<pre style="display: none;">
+				(function(){
+					${result.code}
+					return k
+				})()
+			</pre>`,
 			{ flag: 'a' },
 			(err) => err ? rej(err) : res()
 		)
