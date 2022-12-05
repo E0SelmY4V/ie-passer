@@ -3,7 +3,10 @@ const { transform } = require('@babel/core/lib/index');
 const { spawn } = require('child_process');
 const { join } = require('path');
 
-iePasser.defConf = {
+function Conf (n) {
+	for (const i in n) this[i] = n[i];
+}
+Conf.prototype = iePasser.defConf = {
 	opts: {
 		"presets": ["@babel/preset-env"],
 	},
@@ -11,7 +14,8 @@ iePasser.defConf = {
 	version: '5',
 };
 
-function iePasser(path, test, conf = iePasser.defConf) {
+function iePasser(path, test, _conf = null) {
+	const conf = new Conf(_conf);
 	const outPath = join(__dirname, 'res', `${conf.out}.hta`);
 	new Promise((res, rej) => fs.writeFile(
 		outPath,
