@@ -32,7 +32,14 @@ function iePasser(_path, _test, _conf = null) {
 		let code = '';
 		for (const i in test) {
 			const f = test[i].toString();
-			code += `"${i}":()=>${f.indexOf('{') === -1 ? f : f.slice(f.indexOf('{'))},`;
+			try {
+				if (f.indexOf('{') === -1) throw new Error('arrow');
+				const k = f.slice(f.indexOf('{'));
+				new Function(`()=>${k}`);
+				code += `"${i}":()=>${k},\n`;
+			} catch (err) {
+				code += `"${i}":${f},\n`;
+			}
 		}
 		transform(`var k={${code}}`, conf.opts, (err, result) => err ? rej(err) : res(result));
 	})).then(result => new Promise((res, rej) =>
