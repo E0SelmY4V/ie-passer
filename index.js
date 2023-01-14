@@ -2,6 +2,7 @@ const fs = require('fs');
 const { transform } = require('@babel/core/lib/index');
 const { spawn } = require('child_process');
 const { join } = require('path');
+const { getInnerCode } = require('func2code');
 
 function Conf(n) {
 	for (const i in n) this[i] = n[i];
@@ -30,17 +31,7 @@ function iePasser(_path, _test, _conf = null) {
 		.on('error', rej)
 	)).then(() => new Promise((res, rej) => {
 		let code = '';
-		for (const i in test) {
-			const f = test[i].toString();
-			try {
-				if (f.indexOf('{') === -1) throw new Error('arrow');
-				const k = f.slice(f.indexOf('{'));
-				new Function(`()=>${k}`);
-				code += `"${i}":()=>${k},\n`;
-			} catch (err) {
-				code += `"${i}":${f},\n`;
-			}
-		}
+		for (const i in test) code += `"${i}":()=>{${getInnerCode(test[i])}},\n`;
 		transform(`var k={${code}}`, conf.opts, (err, result) => err ? rej(err) : res(result));
 	})).then(result => new Promise((res, rej) =>
 		fs.writeFile(
