@@ -53,4 +53,4 @@ function iePasser(_path, _test, _conf = null) {
 	);
 }
 
-this['default'] = this.iePasser = iePasser;
+module.exports = iePasser['default'] = iePasser.iePasser = iePasser;

@@ -14,7 +14,7 @@ This tool packaged HTA test into a small function, making your debug easier.
 ```javascript
 import iePasser from 'ie-passer';
 // or
-const { iePasser } = require('ie-passer');
+const iePasser = require('ie-passer');
 
 iePasser(
   'Your:\\Project\\index.ie.js',

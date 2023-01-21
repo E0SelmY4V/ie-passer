@@ -22,9 +22,13 @@
 	},
 	"homepage": "https://github.com/E0SelmY4V/ie-passer#readme",
 	"dependencies": {
-		"@babel/core": "^7.20.5",
+		"@babel/core": "",
 		"func2code": "^1.0.0",
-		"@babel/preset-env": "^7.20.2"
+		"@babel/preset-env": "",
+		"@types/node": ""
+	},
+	"devDependencies": {
+		"export-tester": "^1.0.2"
 	},
 	"os": [
 		"win32"
