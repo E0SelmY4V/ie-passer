@@ -9,7 +9,7 @@ declare namespace iePasser {
 }
 /**
  * IE Passer - Debug in IE easily!
- * @version 1.3.4
+ * @version 1.3.5
  * @link https://github.com/E0SelmY4V/ie-passer
  */
 declare const iePasser: {
